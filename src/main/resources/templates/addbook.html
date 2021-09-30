@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Add student</h1>
+	<h1>Add a new book</h1>
 	<div>
 		<form th:object="${book}" th:action="@{/save}" action="#" method="post">
 		  	<label for="author">Author</label>
@@ -19,6 +19,13 @@
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<label for="year">Year</label>
 			<input type="text" th:field="*{year}" />
+			
+			<div style="clear: both; display: block; height: 10px;"></div>						
+		  	<label for="categorylist">Category</label>
+			 <select id="categorylist" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+    		</select>
+			
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<input type="submit" value="Save"></input>
 		</form>

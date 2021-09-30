@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.Bookstore.domain.Book;
 import com.example.Bookstore.domain.BookRepository;
+import com.example.Bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
@@ -20,6 +21,9 @@ public class BookController {
 
 	@Autowired
 	private BookRepository repository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 
 	@RequestMapping(value = { "/", "/booklist" })
 	public String studentList(Model model) {
@@ -32,9 +36,12 @@ public class BookController {
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 
 	}
+	
+	//Saving a book
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Book book) {
@@ -53,10 +60,10 @@ public class BookController {
 	
 	// Update functionality: Updating a book
 	
-	@RequestMapping(value = "/edit/{id}")
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
-		Optional<Book> book = repository.findById(bookId); 
-		model.addAttribute("book", book); 
+		model.addAttribute("book", repository.findById(bookId));
+		model.addAttribute("categories", crepository.findAll());
 		return "edit";
 
 	}
