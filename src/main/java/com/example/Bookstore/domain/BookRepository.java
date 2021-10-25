@@ -12,6 +12,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     List<Book> findByYear(@Param("year") int year);
     
+    List<Book> findByTitle(@Param("title") String title);
 
    
  
